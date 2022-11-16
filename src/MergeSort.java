@@ -6,12 +6,8 @@ public class MergeSort implements Sort {
         int[] LeftArray = new int[sizeLeftArray];
         int[] RightArray = new int[sizeRightArray];
 
-        for (int i = 0; i < sizeLeftArray; i++) {
-            LeftArray[i] = a[beg + i];
-        }
-        for (int i = 0; i < sizeRightArray; i++) {
-            RightArray[i] = a[mid + i + 1];
-        }
+        System.arraycopy(a, beg, LeftArray, 0, sizeLeftArray);
+        System.arraycopy(a, mid + 1, RightArray, 0, sizeRightArray);
 
         int i = 0;
         int j = 0;
@@ -50,8 +46,10 @@ public class MergeSort implements Sort {
 
     @Override
     public void sort(int[] array) {
-        int begIndex = 0;
-        int endIndex = array.length - 1;
-        mergeDivide(array, begIndex, endIndex);
+        if (!(array.length < 2)) {
+            int begIndex = 0;
+            int endIndex = array.length - 1;
+            mergeDivide(array, begIndex, endIndex);
+        }
     }
 }
