@@ -1,5 +1,5 @@
-public class MergeSortUtil {
-    private static void mergeCompare(int[] a, int beg, int mid, int end) {
+public class MergeSort implements Sort {
+    private void mergeCompare(int[] a, int beg, int mid, int end) {
         int sizeLeftArray = mid - beg + 1;
         int sizeRightArray = end - mid;
 
@@ -39,7 +39,7 @@ public class MergeSortUtil {
         }
     }
 
-    private static void mergeDivide(int[] a, int beg, int end) {
+    private void mergeDivide(int[] a, int beg, int end) {
         if (beg < end) {
             int mid = (end + beg) / 2;
             mergeDivide(a, beg, mid);
@@ -48,9 +48,10 @@ public class MergeSortUtil {
         }
     }
 
-    public static void mergeSort(int[] a) {
+    @Override
+    public void sort(int[] array) {
         int begIndex = 0;
-        int endIndex = a.length - 1;
-        mergeDivide(a, begIndex, endIndex);
+        int endIndex = array.length - 1;
+        mergeDivide(array, begIndex, endIndex);
     }
 }

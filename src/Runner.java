@@ -2,7 +2,8 @@ public class Runner {
     public static void main(String args[]) {
         int[] a = new int[]{100, 1, 2, 45, 12, 1, 1 , 0, -1};
         printArray(a);
-        MergeSortUtil.mergeSort(a);
+        Sort sorter = new MergeSort();
+        sorter.sort(a);
         printArray(a);
     }
 
