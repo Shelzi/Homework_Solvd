@@ -1,6 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.entity.bank;
-
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.entity.currency.CurrencyId;
+package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
 import java.util.Objects;
 import java.util.Set;
@@ -52,5 +50,15 @@ public class Bank {
     @Override
     public int hashCode() {
         return Objects.hash(name, country, availableCurrency, clientsSet);
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", availableCurrency=" + availableCurrency +
+                ", clientsSet=" + clientsSet +
+                '}';
     }
 }

@@ -1,10 +1,7 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.entity.bank;
-
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.entity.currency.CurrencyId;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.entity.currency.Currency;
+package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
 public class BankAccount {
-    private static long fake_id = 1;
+    private static long FAKE_ID = 1;
     private static final int DEFAULT_STARTING_VALUE = 0;
 
     private final long accountId;
@@ -12,13 +9,13 @@ public class BankAccount {
     private Currency currencyValue;
 
     public BankAccount(CurrencyId currencyId) {
-        this.accountId = fake_id++;
+        this.accountId = FAKE_ID++;
         this.currencyId = currencyId;
         this.currencyValue = new Currency(currencyId, DEFAULT_STARTING_VALUE);
     }
 
     public BankAccount(CurrencyId currencyId, Currency currencyValue) {
-        this.accountId = fake_id++;
+        this.accountId = FAKE_ID++;
         this.currencyId = currencyId;
         this.currencyValue = currencyValue;
     }

@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.entity.currency;
+package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
 public enum CurrencyId {
     BYN,
