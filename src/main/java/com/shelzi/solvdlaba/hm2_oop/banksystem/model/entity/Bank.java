@@ -54,7 +54,7 @@ public class Bank {
 
     @Override
     public String toString() {
-        return "Bank{" +
+        return "\nBank{" +
                 "name='" + name + '\'' +
                 ", country='" + country + '\'' +
                 ", availableCurrency=" + availableCurrency +

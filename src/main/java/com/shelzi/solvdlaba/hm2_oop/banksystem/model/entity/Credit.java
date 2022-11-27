@@ -66,7 +66,7 @@ public class Credit {
 
     @Override
     public String toString() {
-        return "Credit{" +
+        return "\nCredit{" +
                 "creditId=" + creditId +
                 ", currencyId=" + currencyId +
                 ", value=" + value +

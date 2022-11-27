@@ -1,5 +1,7 @@
 package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Person {
@@ -10,11 +12,11 @@ public class Person {
     private Set<Credit> credits;
     private Set<BankAccount> bankAccounts;
 
-    public Person(String fullName, Set<Credit> credits, Set<BankAccount> bankAccounts) {
+    public Person(String fullName) {
         id = FAKE_ID++;
         this.fullName = fullName;
-        this.credits = credits;
-        this.bankAccounts = bankAccounts;
+        this.credits = new HashSet<>();
+        this.bankAccounts = new HashSet<>();
     }
 
     public long getId() {
@@ -43,5 +45,31 @@ public class Person {
 
     public void setBankAccounts(Set<BankAccount> bankAccounts) {
         this.bankAccounts = bankAccounts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id &&
+                fullName.equals(person.fullName) &&
+                credits.equals(person.credits) &&
+                bankAccounts.equals(person.bankAccounts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullName, credits, bankAccounts);
+    }
+
+    @Override
+    public String toString() {
+        return "\n\tPerson{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", credits=" + credits +
+                ", bankAccounts=" + bankAccounts +
+                '}';
     }
 }

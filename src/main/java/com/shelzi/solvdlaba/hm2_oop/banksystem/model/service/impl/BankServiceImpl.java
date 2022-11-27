@@ -8,6 +8,7 @@ import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
 
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -31,7 +32,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public boolean createBankAccount(Bank bank, long personId, CurrencyId currencyId) throws ServiceException {
-        if (bank.getAvailableCurrency().contains(currencyId)){
+        if (bank.getAvailableCurrency().contains(currencyId)) {
             Optional<Person> person = bank.getClientsSet()
                     .stream()
                     .filter(p -> p.getId() == personId).findAny();
@@ -46,8 +47,35 @@ public class BankServiceImpl implements BankService {
         }
     }
 
-    @Override`
-    public boolean addPerson(Bank bank, Person person) {
-        return false;
+    private Person createPerson() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter name of new person");
+        return new Person(scan.nextLine());
+    }
+
+    @Override
+    public boolean addPerson(Bank bank) throws ServiceException {
+        Person newPerson = createPerson();
+        Optional<Person> optionalPerson = bank.getClientsSet().stream()
+                .filter(p -> p.getFullName().equals(newPerson.getFullName()))
+                .findAny();
+        if (optionalPerson.isEmpty()) {
+            bank.getClientsSet().add(newPerson);
+            return true;
+        } else {
+            throw new ServiceException("Person already exist");
+        }
+    }
+
+    @Override
+    public Person findPersonByFullName(Bank bank, String name) throws ServiceException {
+        Optional<Person> optionalPerson = bank.getClientsSet().stream()
+                .filter(p -> p.getFullName().equals(name))
+                .findAny();
+        if (optionalPerson.isPresent()) {
+            return optionalPerson.get();
+        } else {
+            throw new ServiceException("Person dont exist.");
+        }
     }
 }
