@@ -7,9 +7,9 @@ public class Bank {
     private final String name;
     private final String country;
     private final Set<CurrencyId> availableCurrency; // not sure about final
-    private Set<Person> clientsSet;
+    private Set<Customer> clientsSet;
 
-    public Bank(String name, String country, Set<CurrencyId> availableCurrency, Set<Person> clientsSet) {
+    public Bank(String name, String country, Set<CurrencyId> availableCurrency, Set<Customer> clientsSet) {
         this.name = name;
         this.country = country;
         this.availableCurrency = availableCurrency;
@@ -28,11 +28,11 @@ public class Bank {
         return availableCurrency;
     }
 
-    public Set<Person> getClientsSet() {
+    public Set<Customer> getClientsSet() {
         return clientsSet;
     }
 
-    public void setClientsSet(Set<Person> clientsSet) {
+    public void setClientsSet(Set<Customer> clientsSet) {
         this.clientsSet = clientsSet;
     }
 

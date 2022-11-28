@@ -1,22 +1,19 @@
 package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-public class Person {
+public abstract class Person {
     private static long FAKE_ID = 1;
 
     private final long id;
     private String fullName; // not sure about making it not final
-    private Set<Credit> credits;
-    private Set<BankAccount> bankAccounts;
+    private short age;
 
-    public Person(String fullName) {
+    public Person(String fullName, short age) {
         id = FAKE_ID++;
         this.fullName = fullName;
-        this.credits = new HashSet<>();
-        this.bankAccounts = new HashSet<>();
+        this.age = age;
+
     }
 
     public long getId() {
@@ -31,21 +28,15 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public Set<Credit> getCredits() {
-        return credits;
+    public short getAge() {
+        return age;
     }
 
-    public void setCredits(Set<Credit> credits) {
-        this.credits = credits;
+    public void setAge(short age) {
+        this.age = age;
     }
 
-    public Set<BankAccount> getBankAccounts() {
-        return bankAccounts;
-    }
-
-    public void setBankAccounts(Set<BankAccount> bankAccounts) {
-        this.bankAccounts = bankAccounts;
-    }
+    public abstract boolean isCreditAvailable();
 
     @Override
     public boolean equals(Object o) {
@@ -53,23 +44,18 @@ public class Person {
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
         return id == person.id &&
-                fullName.equals(person.fullName) &&
-                credits.equals(person.credits) &&
-                bankAccounts.equals(person.bankAccounts);
+                fullName.equals(person.fullName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullName, credits, bankAccounts);
+        return Objects.hash(id, fullName);
     }
 
     @Override
     public String toString() {
         return "\n\tPerson{" +
                 "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", credits=" + credits +
-                ", bankAccounts=" + bankAccounts +
-                '}';
+                ", fullName='" + fullName + '\'';
     }
 }

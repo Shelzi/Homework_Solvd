@@ -1,10 +1,7 @@
 package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl;
 
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Bank;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.BankAccount;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Person;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
 
 import java.util.Optional;
@@ -13,34 +10,36 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BankServiceImpl implements BankService {
-    private static final Lock locker = new ReentrantLock();
+    private static final Lock LOCKER = new ReentrantLock();
     private static volatile BankService instance;
+
 
     private BankServiceImpl() {
     }
 
     public static BankService getInstance() {
         if (instance == null) {
-            locker.lock();
+            LOCKER.lock();
             if (instance == null) {
                 instance = new BankServiceImpl();
             }
-            locker.unlock();
+            LOCKER.unlock();
         }
         return instance;
     }
 
     @Override
     public boolean createBankAccount(Bank bank, long personId, CurrencyId currencyId) throws ServiceException {
-        if (bank.getAvailableCurrency().contains(currencyId)) {
-            Optional<Person> person = bank.getClientsSet()
+        if (isBankCanUseCurrency(bank, currencyId)) {
+            Optional<Customer> customerOptional = bank.getClientsSet()
                     .stream()
                     .filter(p -> p.getId() == personId).findAny();
-            if (person.isPresent()) {
-                person.get().getBankAccounts().add(new BankAccount(currencyId));
+            if (customerOptional.isPresent()) {
+                Customer customer = new Customer(customerOptional.get());
+                customer.getBankAccounts().add(new BankAccount(currencyId));
                 return true;
             } else {
-                throw new ServiceException("No such person in bank.");
+                throw new ServiceException("No such customer in bank.");
             }
         } else {
             throw new ServiceException("No such available currency in bank.");
@@ -49,33 +48,50 @@ public class BankServiceImpl implements BankService {
 
     private Person createPerson() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter name of new person");
-        return new Person(scan.nextLine());
+        System.out.println("Enter name and age of new person.");
+        return new Customer(scan.nextLine(), scan.nextShort()); // only for this task
     }
 
     @Override
-    public boolean addPerson(Bank bank) throws ServiceException {
-        Person newPerson = createPerson();
-        Optional<Person> optionalPerson = bank.getClientsSet().stream()
-                .filter(p -> p.getFullName().equals(newPerson.getFullName()))
+    public boolean addCustomer(Bank bank) throws ServiceException {
+        Customer newCustomer = new Customer(createPerson());
+        Optional<Customer> optionalCustomer = bank.getClientsSet().stream()
+                .filter(p -> p.getFullName().equals(newCustomer.getFullName()))
                 .findAny();
-        if (optionalPerson.isEmpty()) {
-            bank.getClientsSet().add(newPerson);
+        if (optionalCustomer.isEmpty()) {
+            bank.getClientsSet().add(newCustomer);
             return true;
         } else {
-            throw new ServiceException("Person already exist");
+            throw new ServiceException("Customer already exist");
         }
     }
 
     @Override
-    public Person findPersonByFullName(Bank bank, String name) throws ServiceException {
-        Optional<Person> optionalPerson = bank.getClientsSet().stream()
+    public Customer findCustomerByFullName(Bank bank, String name) throws ServiceException {
+        Optional<Customer> optionalCustomer = bank.getClientsSet().stream()
                 .filter(p -> p.getFullName().equals(name))
                 .findAny();
-        if (optionalPerson.isPresent()) {
-            return optionalPerson.get();
+        if (optionalCustomer.isPresent()) {
+            return optionalCustomer.get();
         } else {
-            throw new ServiceException("Person dont exist.");
+            throw new ServiceException("Customer dont exist.");
         }
+    }
+
+    @Override
+    public Credit createCredit(Bank bank,
+                               Customer customer,
+                               CurrencyId currencyId,
+                               Currency value,
+                               int duration, double interestRate) throws ServiceException {
+        if (isBankCanUseCurrency(bank, currencyId) && customer.isCreditAvailable()) {
+            return new Credit(currencyId, value, interestRate, duration);
+        } else {
+            throw new ServiceException("Can't give credit to this person.");
+        }
+    }
+
+    private boolean isBankCanUseCurrency(Bank bank, CurrencyId currencyId) {
+        return bank.getAvailableCurrency().contains(currencyId);
     }
 }

@@ -13,7 +13,7 @@ public class Credit {
     private final LocalDate creditCreationDate;
     private final int duration;
 
-    public Credit(long creditId, CurrencyId currencyId, Currency value, double interestRate, int duration) {
+    public Credit(CurrencyId currencyId, Currency value, double interestRate, int duration) {
         this.currencyId = currencyId;
         this.creditId = FAKE_ID++;
         this.value = value;
