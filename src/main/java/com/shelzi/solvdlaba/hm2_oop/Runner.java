@@ -26,13 +26,13 @@ public class Runner {
         try {
             bankService.addCustomer(alfaBank);
             System.out.println("Enter a owner name of new bank account.");
-            bankService.createBankAccount(alfaBank,
-                    bankService.findCustomerByFullName(alfaBank, scanner.nextLine()).getId(),
-                    CurrencyId.EURO);
+            bankService.findCustomerByFullName(alfaBank, "Den").getBankAccounts().add(bankService.createBankAccount(alfaBank,
+                    bankService.findCustomerByFullName(alfaBank, scanner.nextLine()),
+                    CurrencyId.EURO));
 
             System.out.println(alfaBank);
 
-            bankService.findCustomerByFullName(alfaBank,"Den").getCredits().add(bankService.createCredit(alfaBank,
+            bankService.findCustomerByFullName(alfaBank, "Den").getCredits().add(bankService.createCredit(alfaBank,
                     bankService.findCustomerByFullName(alfaBank, "Den"),
                     CurrencyId.USD,
                     new Currency(CurrencyId.USD, 100000),

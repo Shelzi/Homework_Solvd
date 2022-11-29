@@ -2,11 +2,11 @@ package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
 import java.util.Objects;
 
-public class Emploee extends Person {
+public class Employee extends Person {
     private String officeAddress;
     private String position;
 
-    public Emploee(String fullName, short age, String officeAddress, String position) {
+    public Employee(String fullName, short age, String officeAddress, String position) {
         super(fullName, age);
         this.officeAddress = officeAddress;
         this.position = position;
@@ -38,9 +38,9 @@ public class Emploee extends Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Emploee emploee = (Emploee) o;
-        return officeAddress.equals(emploee.officeAddress)
-                && position.equals(emploee.position);
+        Employee employee = (Employee) o;
+        return officeAddress.equals(employee.officeAddress)
+                && position.equals(employee.position);
     }
 
     @Override

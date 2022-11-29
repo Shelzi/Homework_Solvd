@@ -13,7 +13,6 @@ public abstract class Person {
         id = FAKE_ID++;
         this.fullName = fullName;
         this.age = age;
-
     }
 
     public long getId() {

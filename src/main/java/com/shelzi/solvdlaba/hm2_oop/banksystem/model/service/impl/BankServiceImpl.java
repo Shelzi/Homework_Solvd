@@ -29,15 +29,10 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public boolean createBankAccount(Bank bank, long personId, CurrencyId currencyId) throws ServiceException {
+    public BankAccount createBankAccount(Bank bank, Customer customer, CurrencyId currencyId) throws ServiceException {
         if (isBankCanUseCurrency(bank, currencyId)) {
-            Optional<Customer> customerOptional = bank.getClientsSet()
-                    .stream()
-                    .filter(p -> p.getId() == personId).findAny();
-            if (customerOptional.isPresent()) {
-                Customer customer = new Customer(customerOptional.get());
-                customer.getBankAccounts().add(new BankAccount(currencyId));
-                return true;
+            if (customer != null) {
+                return new BankAccount(currencyId);
             } else {
                 throw new ServiceException("No such customer in bank.");
             }

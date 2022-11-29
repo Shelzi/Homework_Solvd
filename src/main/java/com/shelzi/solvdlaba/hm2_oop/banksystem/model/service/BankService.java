@@ -4,7 +4,7 @@ import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceExcept
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
 
 public interface BankService {
-    boolean createBankAccount(Bank bank, long personId, CurrencyId currencyId) throws ServiceException;
+    BankAccount createBankAccount(Bank bank, Customer customer, CurrencyId currencyId) throws ServiceException;
 
     boolean addCustomer(Bank bank) throws ServiceException;
 
