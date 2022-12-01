@@ -67,8 +67,8 @@ public class Customer extends Person {
     @Override
     public String toString() {
 
-        return super.toString() + ", credits=" + credits +
-                ", bankAccounts=" + bankAccounts +
+        return super.toString() + ", \n\tcredits=" + credits +
+                ", \n\tbankAccounts=" + bankAccounts +
                 '}';
     }
 }

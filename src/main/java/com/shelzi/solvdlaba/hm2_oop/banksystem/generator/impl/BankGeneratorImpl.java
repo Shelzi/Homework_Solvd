@@ -16,7 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BankGeneratorImpl implements Generator<Bank> {
     private static final Set<CurrencyId> DEFAULT_CURRENCY_SET = Set.of(CurrencyId.EURO, CurrencyId.USD, CurrencyId.BYN);
     private static final Lock LOCKER = new ReentrantLock();
-    private static final Generator<Customer> customerGenerator = CustomerGeneratorImpl.getInstance();
     private static volatile Generator<Bank> instance;
 
     private final Random random = new Random(5);
@@ -37,12 +36,12 @@ public class BankGeneratorImpl implements Generator<Bank> {
 
     @Override
     public Set<Bank> generate(int amountOfBanks) {
-        return generate(amountOfBanks, random.nextInt() + 1);
+        return generate(amountOfBanks, random.nextInt(5) + 1);
     }
 
     private Set<Bank> generate(int amountOfBanks, int amountOfCustomers) {
         Set<Bank> bankSet = new HashSet<>();
-        for (int i = 0; i < amountOfBanks; i++) {
+        for (int i = 1; i <= amountOfBanks; i++) {
             bankSet.add(generateBank(i, amountOfCustomers));
         }
         return bankSet;
@@ -52,6 +51,6 @@ public class BankGeneratorImpl implements Generator<Bank> {
         return new Bank("Bank #" + nameNumber,
                 "Country #" + nameNumber,
                 DEFAULT_CURRENCY_SET,
-                customerGenerator.generate(amountOfCustomers));
+                new CustomerGeneratorImpl().generate(amountOfCustomers));
     }
 }

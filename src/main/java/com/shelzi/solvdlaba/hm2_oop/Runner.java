@@ -1,6 +1,8 @@
 package main.java.com.shelzi.solvdlaba.hm2_oop;
 
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.Generator;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl.BankGeneratorImpl;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Bank;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
@@ -13,8 +15,10 @@ import java.util.Set;
 
 public class Runner {
     private static BankService bankService = BankServiceImpl.getInstance();
+    private static Generator<Bank> bankGenerator = BankGeneratorImpl.getInstance();
 
     public static void main(String[] args) {
+/*
         Scanner scanner = new Scanner(System.in);
         Bank alfaBank = new Bank("AlfaBank",
                 "Belarus",
@@ -22,8 +26,9 @@ public class Runner {
                 new HashSet<>());
 
         System.out.println(alfaBank);
-
-        try {
+*/
+        System.out.println(bankGenerator.generate(3));
+/*        try {
             bankService.addCustomer(alfaBank);
             System.out.println("Enter a owner name of new bank account.");
             bankService.findCustomerByFullName(alfaBank, "Den").getBankAccounts().add(bankService.createBankAccount(alfaBank,
@@ -42,6 +47,6 @@ public class Runner {
             System.out.println(alfaBank);
         } catch (ServiceException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

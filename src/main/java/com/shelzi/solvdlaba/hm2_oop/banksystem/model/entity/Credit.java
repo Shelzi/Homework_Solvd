@@ -7,14 +7,12 @@ public class Credit {
     private static long FAKE_ID = 1;
 
     private final long creditId;
-    private final CurrencyId currencyId;
     private final Currency value;
     private final double interestRate; // not sure about final
     private final LocalDate creditCreationDate;
     private final int duration;
 
-    public Credit(CurrencyId currencyId, Currency value, double interestRate, int duration) {
-        this.currencyId = currencyId;
+    public Credit(Currency value, double interestRate, int duration) {
         this.creditId = FAKE_ID++;
         this.value = value;
         this.interestRate = interestRate;
@@ -24,10 +22,6 @@ public class Credit {
 
     public long getCreditId() {
         return creditId;
-    }
-
-    public CurrencyId getCurrencyId() {
-        return currencyId;
     }
 
     public Currency getValue() {
@@ -54,21 +48,19 @@ public class Credit {
         return creditId == other.creditId
                 && Double.compare(other.interestRate, interestRate) == 0
                 && duration == other.duration
-                && currencyId == other.currencyId
                 && value.equals(other.value)
                 && creditCreationDate.equals(other.creditCreationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(creditId, currencyId, value, interestRate, creditCreationDate, duration);
+        return Objects.hash(creditId, value, interestRate, creditCreationDate, duration);
     }
 
     @Override
     public String toString() {
-        return "\nCredit{" +
+        return "\n\t\tCredit{" +
                 "creditId=" + creditId +
-                ", currencyId=" + currencyId +
                 ", value=" + value +
                 ", interestRate=" + interestRate +
                 ", creditCreationDate=" + creditCreationDate +

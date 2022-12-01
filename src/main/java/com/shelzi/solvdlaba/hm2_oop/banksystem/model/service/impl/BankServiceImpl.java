@@ -79,7 +79,7 @@ public class BankServiceImpl implements BankService {
                                Currency value,
                                int duration, double interestRate) throws ServiceException {
         if (isBankCanUseCurrency(bank, currencyId) && customer.isCreditAvailable()) {
-            return new Credit(currencyId, value, interestRate, duration);
+            return new Credit(value, interestRate, duration);
         } else {
             throw new ServiceException("Can't give credit to this person.");
         }
