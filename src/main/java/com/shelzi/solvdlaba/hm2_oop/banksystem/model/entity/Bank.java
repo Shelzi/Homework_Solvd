@@ -57,8 +57,8 @@ public class Bank {
         return "\nBank{" +
                 "name='" + name + '\'' +
                 ", country='" + country + '\'' +
-                ", availableCurrency=" + availableCurrency +
-                ", clientsSet=" + clientsSet +
+                ", availableCurrency=" + availableCurrency.toString() +
+                ", clientsSet=" + clientsSet.toString() +
                 '}';
     }
 }

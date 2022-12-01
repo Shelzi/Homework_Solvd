@@ -5,7 +5,7 @@ import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.util.RoundMethod;
 import java.util.Objects;
 
 @SuppressWarnings("ClassCanBeRecord")
-public class Currency implements Comparable<Currency> {
+public final class Currency implements Comparable<Currency> {
     private final int value;
     private final CurrencyId type;
 

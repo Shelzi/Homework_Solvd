@@ -45,7 +45,7 @@ public class Customer extends Person {
     }
 
     @Override
-    public boolean isCreditAvailable() {
+    public final boolean isCreditAvailable() {
         return true; //because Merry Christmas!
     }
 
@@ -66,7 +66,8 @@ public class Customer extends Person {
 
     @Override
     public String toString() {
-        return ", credits=" + credits +
+
+        return super.toString() + ", credits=" + credits +
                 ", bankAccounts=" + bankAccounts +
                 '}';
     }

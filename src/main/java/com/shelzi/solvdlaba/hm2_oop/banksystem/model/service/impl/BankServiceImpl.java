@@ -13,7 +13,6 @@ public class BankServiceImpl implements BankService {
     private static final Lock LOCKER = new ReentrantLock();
     private static volatile BankService instance;
 
-
     private BankServiceImpl() {
     }
 

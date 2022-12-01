@@ -7,27 +7,20 @@ public class BankAccount {
     private static final int DEFAULT_STARTING_VALUE = 0;
 
     private final long accountId;
-    private final CurrencyId currencyId;
     private Currency currencyValue;
 
     public BankAccount(CurrencyId currencyId) {
         this.accountId = FAKE_ID++;
-        this.currencyId = currencyId;
         this.currencyValue = new Currency(currencyId, DEFAULT_STARTING_VALUE);
     }
 
-    public BankAccount(CurrencyId currencyId, Currency currencyValue) {
+    public BankAccount(Currency currencyValue) {
         this.accountId = FAKE_ID++;
-        this.currencyId = currencyId;
         this.currencyValue = currencyValue;
     }
 
     public long getAccountId() {
         return accountId;
-    }
-
-    public CurrencyId getCurrencyId() {
-        return currencyId;
     }
 
     public Currency getCurrencyValue() {
@@ -43,19 +36,18 @@ public class BankAccount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BankAccount that = (BankAccount) o;
-        return accountId == that.accountId && currencyId == that.currencyId && currencyValue.equals(that.currencyValue);
+        return accountId == that.accountId && currencyValue.equals(that.currencyValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, currencyId, currencyValue);
+        return Objects.hash(accountId, currencyValue);
     }
 
     @Override
     public String toString() {
         return "\n\t\tBankAccount{" +
                 "accountId=" + accountId +
-                ", currencyId=" + currencyId +
                 ", currencyValue=" + currencyValue +
                 '}';
     }
