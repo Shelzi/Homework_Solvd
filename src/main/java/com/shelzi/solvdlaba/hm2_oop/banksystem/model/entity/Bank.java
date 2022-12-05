@@ -1,9 +1,10 @@
 package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Bank {
+public class Bank implements Comparable<Bank>{
     private final String name;
     private final String country;
     private final Set<CurrencyId> availableCurrency; // not sure about final
@@ -14,6 +15,10 @@ public class Bank {
         this.country = country;
         this.availableCurrency = availableCurrency;
         this.clientsSet = clientsSet;
+    }
+
+    public Bank(String name, String country, Set<CurrencyId> availableCurrency) {
+        this(name, country, availableCurrency, new HashSet<>());
     }
 
     public String getName() {
@@ -60,5 +65,10 @@ public class Bank {
                 ", availableCurrency=" + availableCurrency.toString() +
                 ", clientsSet=" + clientsSet.toString() +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Bank o) {
+        return name.compareTo(o.name);
     }
 }

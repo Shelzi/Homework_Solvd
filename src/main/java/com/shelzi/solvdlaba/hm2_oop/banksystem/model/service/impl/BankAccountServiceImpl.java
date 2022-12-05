@@ -28,21 +28,29 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public void withdraw(BankAccount bankAccount, Currency amount) throws ServiceException {
-
-        if (!(bankAccount.getCurrencyValue().getValue() < amount.getValue())) {
-            bankAccount.setCurrencyValue(bankAccount.getCurrencyValue().add(amount));
+        int currency = bankAccount.getCurrencyValue().getValue();
+        if (bankAccount.getCurrencyValue().getType().equals(amount.getType())) {
+            if (!(currency < amount.getValue())) {
+                bankAccount.setCurrencyValue(bankAccount.getCurrencyValue().sub(amount));
+            } else {
+                throw new ServiceException("Not enough money.");
+            }
         } else {
-            throw new ServiceException("Not enough money.");
+            throw new ServiceException("Wrong currency type.");
         }
     }
 
     @Override
     public void deposit(BankAccount bankAccount, Currency amount) throws ServiceException {
         int currency = bankAccount.getCurrencyValue().getValue();
-        if (!(currency + amount.getValue() < currency)) {
-            bankAccount.setCurrencyValue(bankAccount.getCurrencyValue().sub(amount));
+        if (bankAccount.getCurrencyValue().getType().equals(amount.getType())) {
+            if (!(currency + amount.getValue() < currency)) {
+                bankAccount.setCurrencyValue(bankAccount.getCurrencyValue().add(amount));
+            } else {
+                throw new ServiceException("Max value overflow.");
+            }
         } else {
-            throw new ServiceException("Max value overflow.");
+            throw new ServiceException("Wrong currency type.");
         }
     }
 }

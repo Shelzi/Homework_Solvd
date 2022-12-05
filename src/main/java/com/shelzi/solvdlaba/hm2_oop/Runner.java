@@ -6,47 +6,50 @@ import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl.BankGene
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Bank;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Customer;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankAccountService;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankAccountServiceImpl;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankServiceImpl;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 
 public class Runner {
-    private static BankService bankService = BankServiceImpl.getInstance();
-    private static Generator<Bank> bankGenerator = BankGeneratorImpl.getInstance();
+    private static BankService bankService;
+    private static BankAccountService bankAccountService;
+    private static Generator<Bank> bankGenerator;
+
+
+    static {
+        bankService = BankServiceImpl.getInstance();
+        bankAccountService = BankAccountServiceImpl.getInstance();
+        bankGenerator = BankGeneratorImpl.getInstance();
+    }
 
     public static void main(String[] args) {
-/*
-        Scanner scanner = new Scanner(System.in);
-        Bank alfaBank = new Bank("AlfaBank",
-                "Belarus",
-                Set.of(CurrencyId.EURO, CurrencyId.USD),
-                new HashSet<>());
 
-        System.out.println(alfaBank);
-*/
-        System.out.println(bankGenerator.generate(3));
-/*        try {
-            bankService.addCustomer(alfaBank);
-            System.out.println("Enter a owner name of new bank account.");
-            bankService.findCustomerByFullName(alfaBank, "Den").getBankAccounts().add(bankService.createBankAccount(alfaBank,
-                    bankService.findCustomerByFullName(alfaBank, scanner.nextLine()),
-                    CurrencyId.EURO));
 
-            System.out.println(alfaBank);
+        Logger logger = LogManager.getRootLogger();
+        logger.trace("Configuration File Defined To Be :: " + System.getProperty("log4j.configurationFile"));
+        logger.log(Level.INFO, "Test");
 
-            bankService.findCustomerByFullName(alfaBank, "Den").getCredits().add(bankService.createCredit(alfaBank,
-                    bankService.findCustomerByFullName(alfaBank, "Den"),
-                    CurrencyId.USD,
-                    new Currency(CurrencyId.USD, 100000),
-                    48, //durationDe
-                    13.5));     //interest rate (процент)
-
-            System.out.println(alfaBank);
+        List<Bank> bankList = bankGenerator.generate(3).stream().sorted(Bank::compareTo).toList();
+        logger.log(Level.INFO, bankList);
+        try {
+            //Customer customer = bankService.findCustomerByFullName(bankList.get(0), "Invalid Name"); // Exception from lower method
+            Customer customer = bankService.findCustomerByFullName(bankList.get(0), "Name of Customer #0"); // No exception
+            logger.log(Level.INFO, customer.getBankAccounts());
+            bankAccountService.withdraw(customer.getBankAccounts().stream().toList().get(0),
+                    new Currency(CurrencyId.USD, 100));
+            logger.log(Level.INFO, customer.getBankAccounts());
         } catch (ServiceException e) {
-            e.printStackTrace();
-        }*/
+            logger.log(Level.WARN, e);
+        }
     }
 }

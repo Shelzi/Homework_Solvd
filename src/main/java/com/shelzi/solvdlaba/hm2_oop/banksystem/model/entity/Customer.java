@@ -7,15 +7,17 @@ import java.util.Set;
 public class Customer extends Person {
     private Set<Credit> credits;
     private Set<BankAccount> bankAccounts;
+    private double creditRating;
 
-    public Customer(String fullName, short age, Set<Credit> credits, Set<BankAccount> bankAccounts) {
+    public Customer(String fullName, short age, Set<Credit> credits, Set<BankAccount> bankAccounts, double creditRating) {
         super(fullName, age);
         this.credits = credits;
         this.bankAccounts = bankAccounts;
+        this.creditRating = creditRating;
     }
 
-    public Customer(Person person, Set<Credit> credits, Set<BankAccount> bankAccounts) {
-        this(person.getFullName(), person.getAge(), credits, bankAccounts);
+    public Customer(Person person, Set<Credit> credits, Set<BankAccount> bankAccounts, double creditRating) {
+        this(person.getFullName(), person.getAge(), credits, bankAccounts, creditRating);
     }
 
     public Customer(String fullName, short age) {
@@ -44,9 +46,12 @@ public class Customer extends Person {
         this.bankAccounts = bankAccounts;
     }
 
-    @Override
-    public final boolean isCreditAvailable() {
-        return true; //because Merry Christmas!
+    public double getCreditRating() {
+        return creditRating;
+    }
+
+    public void setCreditRating(double creditRating) {
+        this.creditRating = creditRating;
     }
 
     @Override
@@ -56,12 +61,13 @@ public class Customer extends Person {
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
         return Objects.equals(credits, customer.credits)
-                && Objects.equals(bankAccounts, customer.bankAccounts);
+                && Objects.equals(bankAccounts, customer.bankAccounts)
+                && creditRating == customer.creditRating;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), credits, bankAccounts);
+        return Objects.hash(super.hashCode(), credits, bankAccounts, creditRating);
     }
 
     @Override
@@ -69,6 +75,7 @@ public class Customer extends Person {
 
         return super.toString() + ", \n\tcredits=" + credits +
                 ", \n\tbankAccounts=" + bankAccounts +
+                ", \n\tcreditRating=" + creditRating +
                 '}';
     }
 }

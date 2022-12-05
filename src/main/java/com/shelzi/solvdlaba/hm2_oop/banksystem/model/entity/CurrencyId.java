@@ -9,7 +9,7 @@ public enum CurrencyId {
 
     private static final Random PRNG = new Random();
 
-    public static CurrencyId randomCurrencyId()  {
+    public static CurrencyId randomCurrencyId() {
         CurrencyId[] directions = values();
         return directions[PRNG.nextInt(directions.length)];
     }

@@ -29,11 +29,6 @@ public class Employee extends Person {
     }
 
     @Override
-    public boolean isCreditAvailable() {
-        return true; // because benefits from company :)
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

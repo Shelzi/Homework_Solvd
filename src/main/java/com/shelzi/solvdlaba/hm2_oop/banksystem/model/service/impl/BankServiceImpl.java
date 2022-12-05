@@ -1,5 +1,7 @@
 package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl;
 
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.CustomerAlreadyExistException;
+import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.NoSuchCustomerExistException;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
@@ -12,6 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BankServiceImpl implements BankService {
     private static final Lock LOCKER = new ReentrantLock();
     private static volatile BankService instance;
+    private static final int MIN_CREDIT_RATING = 50;
 
     private BankServiceImpl() {
     }
@@ -33,7 +36,7 @@ public class BankServiceImpl implements BankService {
             if (customer != null) {
                 return new BankAccount(currencyId);
             } else {
-                throw new ServiceException("No such customer in bank.");
+                throw new NoSuchCustomerExistException("No such customer in bank.");
             }
         } else {
             throw new ServiceException("No such available currency in bank.");
@@ -56,7 +59,7 @@ public class BankServiceImpl implements BankService {
             bank.getClientsSet().add(newCustomer);
             return true;
         } else {
-            throw new ServiceException("Customer already exist");
+            throw new CustomerAlreadyExistException("Customer already exist");
         }
     }
 
@@ -68,7 +71,7 @@ public class BankServiceImpl implements BankService {
         if (optionalCustomer.isPresent()) {
             return optionalCustomer.get();
         } else {
-            throw new ServiceException("Customer dont exist.");
+            throw new NoSuchCustomerExistException("Customer didn't exist!");
         }
     }
 
@@ -78,14 +81,18 @@ public class BankServiceImpl implements BankService {
                                CurrencyId currencyId,
                                Currency value,
                                int duration, double interestRate) throws ServiceException {
-        if (isBankCanUseCurrency(bank, currencyId) && customer.isCreditAvailable()) {
+        if (isBankCanUseCurrency(bank, currencyId) && isCreditAvailable(customer)) {
             return new Credit(value, interestRate, duration);
         } else {
             throw new ServiceException("Can't give credit to this person.");
         }
     }
 
-    private boolean isBankCanUseCurrency(Bank bank, CurrencyId currencyId) {
+    public boolean isBankCanUseCurrency(Bank bank, CurrencyId currencyId) {
         return bank.getAvailableCurrency().contains(currencyId);
+    }
+
+    public boolean isCreditAvailable(Customer customer) {
+        return customer.getCreditRating() >= MIN_CREDIT_RATING;
     }
 }

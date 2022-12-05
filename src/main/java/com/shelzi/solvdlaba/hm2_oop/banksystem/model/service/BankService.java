@@ -14,4 +14,6 @@ public interface BankService {
                         Customer customer,
                         CurrencyId currencyId,
                         Currency value, int duration, double interestRate) throws ServiceException;
+
+    boolean isCreditAvailable(Customer customer);
 }

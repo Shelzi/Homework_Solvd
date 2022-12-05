@@ -18,7 +18,7 @@ public class BankGeneratorImpl implements Generator<Bank> {
     private static final Lock LOCKER = new ReentrantLock();
     private static volatile Generator<Bank> instance;
 
-    private final Random random = new Random(5);
+    private final Random random = new Random();
 
     private BankGeneratorImpl() {
     }
@@ -48,9 +48,10 @@ public class BankGeneratorImpl implements Generator<Bank> {
     }
 
     private Bank generateBank(int nameNumber, int amountOfCustomers) {
-        return new Bank("Bank #" + nameNumber,
+        Bank bank = new Bank("Bank #" + nameNumber,
                 "Country #" + nameNumber,
-                DEFAULT_CURRENCY_SET,
-                new CustomerGeneratorImpl().generate(amountOfCustomers));
+                DEFAULT_CURRENCY_SET);
+        bank.setClientsSet(new CustomerGeneratorImpl().generate(amountOfCustomers));
+        return bank;
     }
 }

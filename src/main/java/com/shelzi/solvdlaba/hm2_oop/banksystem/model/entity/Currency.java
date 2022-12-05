@@ -18,6 +18,10 @@ public final class Currency implements Comparable<Currency> {
         return value;
     }
 
+    public CurrencyId getType() {
+        return type;
+    }
+
     public Currency add(Currency currency) {
         return new Currency(currency.type, value + currency.value);
     }
@@ -62,6 +66,6 @@ public final class Currency implements Comparable<Currency> {
 
     @Override
     public String toString() {
-        return String.format("%s.%d", value / 100, value % 100);
+        return String.format("%s.%d %s", value / 100, value % 100, type);
     }
 }

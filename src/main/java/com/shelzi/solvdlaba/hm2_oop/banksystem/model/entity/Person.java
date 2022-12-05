@@ -35,8 +35,6 @@ public abstract class Person {
         this.age = age;
     }
 
-    public abstract boolean isCreditAvailable();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
