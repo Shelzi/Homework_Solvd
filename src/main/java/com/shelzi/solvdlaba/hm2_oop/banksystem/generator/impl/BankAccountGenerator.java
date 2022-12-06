@@ -22,7 +22,9 @@ public class BankAccountGenerator implements Generator<BankAccount> {
     }
 
     private BankAccount generateBankAccount() {
-        return new BankAccount(new Currency(CurrencyId.randomCurrencyId(),
-                new Random().nextInt(DEFAULT_CURRENCY_VALUE_RANDOM_SEED)));
+//        return new BankAccount(new Currency(CurrencyId.randomCurrencyId(),
+//                new Random().nextInt(DEFAULT_CURRENCY_VALUE_RANDOM_SEED)));
+        return new BankAccount(new Currency(CurrencyId.USD, //Hardcode value
+                        new Random().nextInt(DEFAULT_CURRENCY_VALUE_RANDOM_SEED)));
     }
 }

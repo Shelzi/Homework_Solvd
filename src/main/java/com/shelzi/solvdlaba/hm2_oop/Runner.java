@@ -21,32 +21,30 @@ import org.apache.logging.log4j.LogManager;
 
 
 public class Runner {
-    private static BankService bankService;
-    private static BankAccountService bankAccountService;
-    private static Generator<Bank> bankGenerator;
-
+    private static final BankService bankService;
+    private static final BankAccountService bankAccountService;
+    private static final Generator<Bank> bankGenerator;
+    private static final Logger logger;
 
     static {
         bankService = BankServiceImpl.getInstance();
         bankAccountService = BankAccountServiceImpl.getInstance();
         bankGenerator = BankGeneratorImpl.getInstance();
+        logger = LogManager.getRootLogger();
     }
 
     public static void main(String[] args) {
-
-
-        Logger logger = LogManager.getRootLogger();
-        logger.trace("Configuration File Defined To Be :: " + System.getProperty("log4j.configurationFile"));
-        logger.log(Level.INFO, "Test");
-
         List<Bank> bankList = bankGenerator.generate(3).stream().sorted(Bank::compareTo).toList();
         logger.log(Level.INFO, bankList);
         try {
             //Customer customer = bankService.findCustomerByFullName(bankList.get(0), "Invalid Name"); // Exception from lower method
             Customer customer = bankService.findCustomerByFullName(bankList.get(0), "Name of Customer #0"); // No exception
+
             logger.log(Level.INFO, customer.getBankAccounts());
-            bankAccountService.withdraw(customer.getBankAccounts().stream().toList().get(0),
-                    new Currency(CurrencyId.USD, 100));
+
+            bankAccountService.deposit(customer.getBankAccounts().stream().toList().get(0), //or withdraw
+                    new Currency(CurrencyId.USD, 2147483647));                         //or change currencyId type
+
             logger.log(Level.INFO, customer.getBankAccounts());
         } catch (ServiceException e) {
             logger.log(Level.WARN, e);
