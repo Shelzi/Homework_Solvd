@@ -12,8 +12,8 @@ import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankServi
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankAccountServiceImpl;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankServiceImpl;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -21,29 +21,34 @@ import org.apache.logging.log4j.LogManager;
 
 
 public class Runner {
-    private static final BankService bankService;
-    private static final BankAccountService bankAccountService;
-    private static final Generator<Bank> bankGenerator;
-    private static final Logger logger;
-
-    static {
-        bankService = BankServiceImpl.getInstance();
-        bankAccountService = BankAccountServiceImpl.getInstance();
-        bankGenerator = BankGeneratorImpl.getInstance();
-        logger = LogManager.getRootLogger();
-    }
+    private static final BankService bankService = BankServiceImpl.getInstance();
+    ;
+    private static final BankAccountService bankAccountService = BankAccountServiceImpl.getInstance();
+    private static final Generator<Bank> bankGenerator = BankGeneratorImpl.getInstance();
+    private static final Logger logger = LogManager.getRootLogger();
 
     public static void main(String[] args) {
-        List<Bank> bankList = bankGenerator.generate(3).stream().sorted(Bank::compareTo).toList();
-        logger.log(Level.INFO, bankList);
+        List<Integer> integerList = new Random().ints(10_000_000).map(i -> i * 100).boxed().toList();
+        logger.log(Level.DEBUG, integerList);
+
+        List<Bank> bankList = new LinkedList<>(
+                bankGenerator.generate(3).stream().sorted(Bank::compareTo).toList()
+        );
+
+        Map<String, Bank> bankMap = new HashMap<>();
+        bankMap.put("alfabank", bankList.get(0));
+        bankMap.put("priorbank", bankList.get(1));
+        bankMap.put("mtbank", bankList.get(2));
+
+        logger.log(Level.INFO, bankMap);
+
         try {
-            //Customer customer = bankService.findCustomerByFullName(bankList.get(0), "Invalid Name"); // Exception from lower method
-            Customer customer = bankService.findCustomerByFullName(bankList.get(0), "Name of Customer #0"); // No exception
+            Customer customer = bankService.findCustomerByFullName(bankMap.get("alfabank"), "Name of Customer #0");
 
             logger.log(Level.INFO, customer.getBankAccounts());
 
-            bankAccountService.deposit(customer.getBankAccounts().stream().toList().get(0), //or withdraw
-                    new Currency(CurrencyId.USD, 2147483647));                         //or change currencyId type
+            bankAccountService.deposit(customer.getBankAccounts().stream().toList().get(0),
+                    new Currency(CurrencyId.USD, 4000));
 
             logger.log(Level.INFO, customer.getBankAccounts());
         } catch (ServiceException e) {

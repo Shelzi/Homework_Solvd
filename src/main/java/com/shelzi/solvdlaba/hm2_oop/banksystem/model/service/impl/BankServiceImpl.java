@@ -65,13 +65,17 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Customer findCustomerByFullName(Bank bank, String name) throws ServiceException {
-        Optional<Customer> optionalCustomer = bank.getClientsSet().stream()
-                .filter(p -> p.getFullName().equals(name))
-                .findAny();
-        if (optionalCustomer.isPresent()) {
-            return optionalCustomer.get();
+        if (bank != null) {
+            Optional<Customer> optionalCustomer = bank.getClientsSet().stream()
+                    .filter(p -> p.getFullName().equals(name))
+                    .findAny();
+            if (optionalCustomer.isPresent()) {
+                return optionalCustomer.get();
+            } else {
+                throw new NoSuchCustomerExistException("Customer didn't exist!");
+            }
         } else {
-            throw new NoSuchCustomerExistException("Customer didn't exist!");
+            throw new ServiceException("Bank is null");
         }
     }
 
