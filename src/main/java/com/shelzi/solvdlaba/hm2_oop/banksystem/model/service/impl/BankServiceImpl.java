@@ -1,10 +1,10 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl;
 
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.CustomerAlreadyExistException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.NoSuchCustomerExistException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.CustomerAlreadyExistException;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.NoSuchCustomerExistException;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
 
 import java.util.Optional;
 import java.util.Scanner;

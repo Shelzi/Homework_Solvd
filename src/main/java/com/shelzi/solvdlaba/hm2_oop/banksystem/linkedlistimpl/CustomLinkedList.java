@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.linkedlistimpl;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.linkedlistimpl;
 
 
 import java.util.*;

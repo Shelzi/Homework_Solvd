@@ -1,9 +1,9 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl;
 
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.Generator;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Credit;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.generator.Generator;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Credit;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
 
 import java.util.HashSet;
 import java.util.Random;

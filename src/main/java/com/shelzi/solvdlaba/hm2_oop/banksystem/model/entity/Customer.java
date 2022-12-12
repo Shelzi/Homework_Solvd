@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
 import java.util.HashSet;
 import java.util.Objects;

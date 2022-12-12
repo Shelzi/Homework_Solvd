@@ -1,24 +1,22 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop;
+package com.shelzi.solvdlaba.hm2_oop;
 
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.Generator;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl.BankGeneratorImpl;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Bank;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Customer;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankAccountService;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankAccountServiceImpl;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankServiceImpl;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.generator.Generator;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl.BankGeneratorImpl;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Bank;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Customer;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankAccountService;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankAccountServiceImpl;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankServiceImpl;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 import java.util.Map;
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.exception;
 
 public class CustomerAlreadyExistException extends ServiceException{
     public CustomerAlreadyExistException(Throwable cause) {

@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.generator;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.generator;
 
 import java.util.Set;
 

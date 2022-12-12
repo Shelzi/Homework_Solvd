@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.util;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.util;
 
 
 public enum RoundMethod {

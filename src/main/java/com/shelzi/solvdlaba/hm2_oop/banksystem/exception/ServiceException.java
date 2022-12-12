@@ -1,4 +1,4 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.exception;
 
 public class ServiceException extends Exception {
     public ServiceException(Throwable cause) {

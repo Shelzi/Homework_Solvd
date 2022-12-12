@@ -1,7 +1,7 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.model.service;
 
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.*;
 
 public interface BankService {
     BankAccount createBankAccount(Bank bank, Customer customer, CurrencyId currencyId) throws ServiceException;

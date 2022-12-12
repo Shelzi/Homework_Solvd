@@ -1,6 +1,6 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity;
 
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.util.RoundMethod;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.util.RoundMethod;
 
 import java.util.Objects;
 

@@ -1,9 +1,9 @@
-package main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl;
+package com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl;
 
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.BankAccount;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
-import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankAccountService;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.BankAccount;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankAccountService;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
