@@ -1,11 +1,11 @@
 package com.shelzi.solvdlaba.hm2_oop;
 
-import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.exception.ServiceException;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.generator.Generator;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.generator.impl.BankGeneratorImpl;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Bank;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Currency;
+import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.CurrencyId;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.model.entity.Customer;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankAccountService;
 import com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankService;
@@ -30,7 +30,7 @@ public class Runner {
         LinkedList<Bank> bankList = new LinkedList<>(
                 bankGenerator.generate(3).stream().sorted(Bank::compareTo).toList()
         );
-
+        //small changes
         Map<String, Bank> bankMap = new HashMap<>();
         bankMap.put("alfabank", bankList.get(0));
         bankMap.put("priorbank", bankList.get(1));
