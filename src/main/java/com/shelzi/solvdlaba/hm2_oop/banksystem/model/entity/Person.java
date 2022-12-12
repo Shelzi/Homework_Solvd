@@ -8,7 +8,6 @@ public abstract class Person {
     private final long id;
     private String fullName; // not sure about making it not final
     private short age;
-
     public Person(String fullName, short age) {
         id = FAKE_ID++;
         this.fullName = fullName;

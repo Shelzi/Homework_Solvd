@@ -12,26 +12,24 @@ import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.BankServi
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankAccountServiceImpl;
 import main.java.com.shelzi.solvdlaba.hm2_oop.banksystem.model.service.impl.BankServiceImpl;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Runner {
     private static final BankService bankService = BankServiceImpl.getInstance();
-    ;
     private static final BankAccountService bankAccountService = BankAccountServiceImpl.getInstance();
     private static final Generator<Bank> bankGenerator = BankGeneratorImpl.getInstance();
     private static final Logger logger = LogManager.getRootLogger();
 
     public static void main(String[] args) {
-        List<Integer> integerList = new Random().ints(10_000_000).map(i -> i * 100).boxed().toList();
-        logger.log(Level.DEBUG, integerList);
-
-        List<Bank> bankList = new LinkedList<>(
+        LinkedList<Bank> bankList = new LinkedList<>(
                 bankGenerator.generate(3).stream().sorted(Bank::compareTo).toList()
         );
 
