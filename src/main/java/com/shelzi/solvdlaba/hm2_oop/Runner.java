@@ -42,7 +42,7 @@ public class Runner {
             Customer customer = bankService.findCustomerByFullName(bankMap.get("alfabank"), "Name of Customer #0");
 
             logger.log(Level.INFO, customer.getBankAccounts());
-
+            //test 2 changes
             bankAccountService.deposit(customer.getBankAccounts().stream().toList().get(0),
                     new Currency(CurrencyId.USD, 4000));
 
