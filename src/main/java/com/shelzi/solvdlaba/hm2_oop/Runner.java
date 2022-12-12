@@ -43,6 +43,7 @@ public class Runner {
 
             logger.log(Level.INFO, customer.getBankAccounts());
             //test 2 changes
+            //test 3 changes
             bankAccountService.deposit(customer.getBankAccounts().stream().toList().get(0),
                     new Currency(CurrencyId.USD, 4000));
 
