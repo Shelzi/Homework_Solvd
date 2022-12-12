@@ -4,7 +4,7 @@ package com.shelzi.solvdlaba.hm2_oop.banksystem.linkedlistimpl;
 import java.util.*;
 
 public class CustomLinkedList<T> extends AbstractSequentialList<T> {
-
+    LinkedList<> linkedList = new LinkedList();
     int size = 0;
     Node<T> first;
     Node<T> last;
@@ -47,14 +47,69 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
 
     @Override
     public boolean add(T t) {
-        Node<T> newNode = new Node<>(last, t, null);
-        last = newNode;
+        linkLast(t);
         return false;
     }
 
     @Override
     public boolean remove(Object o) {
         return false;
+    }
+
+    private boolean isPositionIndex(int index) {
+        return index >= 0 && index <= size;
+    }
+
+    private void checkPositionIndex(int index) {
+        if (!isPositionIndex(index)) {
+            throw new RuntimeException("No such index");
+        }
+    }
+
+    @Override
+    public void add(int index, T element) {
+        checkPositionIndex(index);
+
+        if (index == size)
+            linkLast(element);
+        else
+            linkBefore(element, node(index));
+    }
+
+    Node<T> node(int index) {
+        Node<T> x;
+        if (index < (size >> 1)) {
+            x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+        } else {
+            x = last;
+            for (int i = size - 1; i > index; i--)
+                x = x.prev;
+        }
+        return x;
+    }
+
+    void linkLast(T t) {
+        final Node<T> l = last;
+        final Node<T> newNode = new Node<>(l, t, null);
+        last = newNode;
+        if (l == null)
+            first = newNode;
+        else
+            l.next = newNode;
+        size++;
+    }
+
+    void linkBefore(T t, Node<T> succ) {
+        final Node<T> pred = succ.prev;
+        final Node<T> newNode = new Node<>(pred, t, succ);
+        succ.prev = newNode;
+        if (pred == null)
+            first = newNode;
+        else
+            pred.next = newNode;
+        size++;
     }
 
     @Override
@@ -100,11 +155,6 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
     @Override
     public T set(int index, T element) {
         return null;
-    }
-
-    @Override
-    public void add(int index, T element) {
-
     }
 
     @Override
