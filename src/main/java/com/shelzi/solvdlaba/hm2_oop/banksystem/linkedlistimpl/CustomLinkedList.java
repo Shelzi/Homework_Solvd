@@ -1,10 +1,8 @@
 package com.shelzi.solvdlaba.hm2_oop.banksystem.linkedlistimpl;
 
-
 import java.util.*;
 
 public class CustomLinkedList<T> extends AbstractSequentialList<T> {
-    LinkedList<> linkedList = new LinkedList();
     int size = 0;
     Node<T> first;
     Node<T> last;
@@ -19,6 +17,20 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
             this.next = next;
             this.prev = prev;
         }
+    }
+
+    Node<T> node(int index) {
+        Node<T> x;
+        if (index < (size >> 1)) {
+            x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+        } else {
+            x = last;
+            for (int i = size - 1; i > index; i--)
+                x = x.prev;
+        }
+        return x;
     }
 
     @Override
@@ -46,27 +58,6 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
     }
 
     @Override
-    public boolean add(T t) {
-        linkLast(t);
-        return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    private boolean isPositionIndex(int index) {
-        return index >= 0 && index <= size;
-    }
-
-    private void checkPositionIndex(int index) {
-        if (!isPositionIndex(index)) {
-            throw new RuntimeException("No such index");
-        }
-    }
-
-    @Override
     public void add(int index, T element) {
         checkPositionIndex(index);
 
@@ -76,18 +67,118 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
             linkBefore(element, node(index));
     }
 
-    Node<T> node(int index) {
-        Node<T> x;
-        if (index < (size >> 1)) {
-            x = first;
-            for (int i = 0; i < index; i++)
-                x = x.next;
+    @Override
+    public boolean add(T t) {
+        linkLast(t);
+        return false;
+    }
+
+    @Override
+    public T get(int index) {
+        checkPositionIndex(index);
+        return node(index).item;
+    }
+
+    @Override
+    public T set(int index, T element) {
+        checkPositionIndex(index);
+        return null;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (o == null) {
+            for (Node<T> x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x);
+                    return true;
+                }
+            }
         } else {
-            x = last;
-            for (int i = size - 1; i > index; i--)
-                x = x.prev;
+            for (Node<T> x = first; x != null; x = x.next) {
+                if (o.equals(x.item)) {
+                    unlink(x);
+                    return true;
+                }
+            }
         }
-        return x;
+        return false;
+    }
+
+    @Override
+    public T remove(int index) {
+        checkElementIndex(index);
+        return unlink(node(index));
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        int index = 0;
+        if (o == null) {
+            for (Node<T> x = first; x != null; x = x.next) {
+                if (x.item == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node<T> x = first; x != null; x = x.next) {
+                if (o.equals(x.item))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        int index = size;
+        if (o == null) {
+            for (Node<T> x = last; x != null; x = x.prev) {
+                index--;
+                if (x.item == null)
+                    return index;
+            }
+        } else {
+            for (Node<T> x = last; x != null; x = x.prev) {
+                index--;
+                if (o.equals(x.item))
+                    return index;
+            }
+        }
+        return -1;
+    }
+
+    private void checkElementIndex(int index) {
+        if (!(index >= 0 && index < size))
+            throw new RuntimeException("Out of bound");
+    }
+
+    private void checkPositionIndex(int index) {
+        if (!(index >= 0 && index <= size)) {
+            throw new RuntimeException("Out of bound");
+        }
+    }
+
+    T unlink(Node<T> x) {
+        final T element = x.item;
+        final Node<T> next = x.next;
+        final Node<T> prev = x.prev;
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+        x.item = null;
+        size--;
+        return element;
     }
 
     void linkLast(T t) {
@@ -101,10 +192,10 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
         size++;
     }
 
-    void linkBefore(T t, Node<T> succ) {
-        final Node<T> pred = succ.prev;
-        final Node<T> newNode = new Node<>(pred, t, succ);
-        succ.prev = newNode;
+    void linkBefore(T t, Node<T> tNode) {
+        final Node<T> pred = tNode.prev;
+        final Node<T> newNode = new Node<>(pred, t, tNode);
+        newNode.prev = newNode;
         if (pred == null)
             first = newNode;
         else
@@ -144,59 +235,5 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
 
     @Override
     public void clear() {
-
-    }
-
-    @Override
-    public T get(int index) {
-        return null;
-    }
-
-    @Override
-    public T set(int index, T element) {
-        return null;
-    }
-
-    @Override
-    public T remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        int index = 0;
-        if (o == null) {
-            for (Node<T> x = first; x != null; x = x.next) {
-                if (x.item == null)
-                    return index;
-                index++;
-            }
-        } else {
-            for (Node<T> x = first; x != null; x = x.next) {
-                if (o.equals(x.item))
-                    return index;
-                index++;
-            }
-        }
-        return -1;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        int index = size;
-        if (o == null) {
-            for (Node<T> x = last; x != null; x = x.prev) {
-                index--;
-                if (x.item == null)
-                    return index;
-            }
-        } else {
-            for (Node<T> x = last; x != null; x = x.prev) {
-                index--;
-                if (o.equals(x.item))
-                    return index;
-            }
-        }
-        return -1;
     }
 }
