@@ -17,10 +17,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 public class Runner {
     private static final BankService bankService = BankServiceImpl.getInstance();
@@ -32,7 +29,7 @@ public class Runner {
         Bank a = bankGenerator.generate(1).stream().findAny().get();
         Bank b = bankGenerator.generate(1).stream().findAny().get();
         Bank c = bankGenerator.generate(1).stream().findAny().get();
-
+        //test
         List<Bank> bankList = new CustomLinkedList<>();
         bankList.add(a);
         bankList.add(b);

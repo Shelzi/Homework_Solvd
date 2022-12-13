@@ -49,15 +49,6 @@ public class CustomLinkedList<T> extends AbstractSequentialList<T> {
     }
 
     @Override
-    public Object[] toArray() {
-        Object[] result = new Object[size];
-        int i = 0;
-        for (Node<T> x = first; x != null; x = x.next)
-            result[i++] = x.item;
-        return result;
-    }
-
-    @Override
     public void add(int index, T element) {
         checkPositionIndex(index);
 
