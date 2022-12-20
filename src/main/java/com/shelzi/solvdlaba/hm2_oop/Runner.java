@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.*;
@@ -30,22 +31,45 @@ public class Runner {
     private static final Generator<Bank> bankGenerator = BankGeneratorImpl.getInstance();
     private static final Logger logger = LogManager.getRootLogger();
 
-    public static void main(String[] args) throws IOException {
-        //prev HW
-        Map<String, Integer> wordsCount = new HashMap<>();
-        for (String s : Arrays.stream(StringUtils.split(FileUtils.readFileToString(new File("src/main/resources/in.txt"), StandardCharsets.UTF_8.name()), " |\\,|\\.|\\!|\\?|\\(|\\)|\\[|\\]|\\;|\\:|\\|\\\n|\\\r|\\\t")).toList()) {
-            wordsCount.put(s, wordsCount.getOrDefault(s, 0) + 1);
-        } // //get input from file and counting
-        for (Map.Entry<String, Integer> e : wordsCount.entrySet()) {
-            FileUtils.writeStringToFile(new File("src/main/resources/out.txt"), e.getKey() + " : " + e.getValue() + "\n", StandardCharsets.UTF_8.name(), true);
-        } // write result to output file
+    private static void testConstructor() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Constructor<Customer> customerConstructor = Customer.class.getConstructor(String.class, short.class);
+        Customer customer = customerConstructor.newInstance("Test name", (short) 22);
+        logger.log(Level.INFO, "Call constructor by reflection api: " + customer);
+        logger.log(Level.INFO, "Get constructor 'getFullName' modifiers by reflection api: " + customerConstructor.getModifiers());
+        logger.log(Level.INFO, "Get parameter types of constructor 'getFullName' by reflection api: " + Arrays.toString(customerConstructor.getParameterTypes()));
+        System.out.println();
+    }
 
-        // first generic
-        StringProcessor<String> stringProcessor = s -> StringUtils.repeat(s, 10);
-        String str = "Cake is a lie. ";
-        System.out.println(stringProcessor.process(str));
+    private static void testMethods(Customer customer) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Method method = customer.getClass().getMethod("getFullName");
+        logger.log(Level.INFO, "Call method 'getFullName' by reflection api: " + method.invoke(customer));
+        logger.log(Level.INFO, "Get method 'getFullName' return type by reflection api: " + method.getGenericReturnType());
+        logger.log(Level.INFO, "Get method 'getFullName' modifiers by reflection api: " + method.getModifiers());
+        logger.log(Level.INFO, "Get parameter types of method 'getFullName' by reflection api: " + Arrays.toString(method.getParameterTypes()));
+        System.out.println();
+    }
 
-        //second generic
+    private static void testFields(Object o) throws IllegalAccessException {
+        Field[] fields = o.getClass().getSuperclass().getDeclaredFields();
+        for (Field f : fields) {
+            f.setAccessible(true);
+            Object value = f.get(o);
+            logger.log(Level.INFO, "Type of field by reflection api: " + f.getGenericType());
+            logger.log(Level.INFO, "Value of field by reflection api: " + value);
+            logger.log(Level.INFO, "Modifiers of field by reflection api: " + f.getModifiers());
+            logger.log(Level.INFO, "Is field has final modifier by reflection api: " + Modifier.isFinal(f.getModifiers()));
+            logger.log(Level.INFO, "Is field has static modifier by reflection api: " + Modifier.isStatic(f.getModifiers()));
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        testConstructor();
+        Customer customer1 = new Customer("Anton Аполинарович Гайдзинов", (short) 99);
+        testMethods(customer1);
+        testFields(customer1);
+
+        /*//second generic
         List<Bank> bankList = bankGenerator.generate(5).stream().toList();
         BankComparator<Bank> specialBankComparator = Bank::compareTo;
         System.out.println(specialBankComparator.compareTo(bankList.get(1), bankList.get(0)));
@@ -60,14 +84,6 @@ public class Runner {
         BiFunction<Bank, String, Customer> findCustomerByName = (b, s) -> b.getClientsSet().stream()
                 .filter(p -> p.getFullName().equals(s)).findAny().get();
         System.out.println(findCustomerByName.apply(bankList.get(0), "Name of Customer #0"));
-
-        //2
-        DoubleSupplier doubleSupplier = () -> 3.1415;
-        System.out.println(doubleSupplier.getAsDouble());
-
-        //3
-        Predicate<Bank> predicate = bank -> bank.getClientsSet().isEmpty();
-        System.out.println(predicate.test(bankList.get(0)));
 
         //4
         Consumer<Bank> showCustomerWithBestCreditRating = b -> System.out.println(b.getClientsSet().stream()
@@ -88,6 +104,6 @@ public class Runner {
             logger.log(Level.INFO, customer.getBankAccounts());
         } catch (ServiceException e) {
             logger.log(Level.WARN, e);
-        }
+        }*/
     }
 }
