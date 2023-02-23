@@ -5,24 +5,23 @@ import com.shelzi.solvdlaba.hm2_oop.daohw.exception.ServiceException;
 import com.shelzi.solvdlaba.hm2_oop.daohw.model.dao.BookingDao;
 import com.shelzi.solvdlaba.hm2_oop.daohw.model.dao.impl.BookingDaoImpl;
 import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.Booking;
-import com.shelzi.solvdlaba.hm2_oop.daohw.model.pool.ConnectionPool;
-import com.shelzi.solvdlaba.hm2_oop.daohw.model.service.ServiceTravel;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.service.BookingTravel;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ServiceTravelImpl implements ServiceTravel {
+public class BookingTravelImpl implements BookingTravel {
     private static final BookingDao bookingDao = BookingDaoImpl.getInstance();
     private static final Lock locker = new ReentrantLock();
-    private static ServiceTravel instance;
+    private static BookingTravel instance;
 
-    public static ServiceTravel getInstance() {
+    public static BookingTravel getInstance() {
         if (instance == null) {
             locker.lock();
             if (instance == null) {
-                instance = new ServiceTravelImpl();
+                instance = new BookingTravelImpl();
             }
             locker.unlock();
         }

@@ -11,9 +11,9 @@ public class ConnectionCreator {
     private static final Properties properties = new Properties();
     private static final String DATABASE_URL;
     private static final String DATABASE_PROPERTY_FILE_PATH = "src/main/resources/database.properties";
-    private static final String DATABASE_DRIVER_FIELD = "db.driver";
-    private static final String DATABASE_URL_FIELD = "db.url";
-    private static final String DATABASE_POOL_SIZE_FIELD = "pool.size";
+    private static final String DATABASE_DRIVER_FIELD = "database.driver";
+    private static final String DATABASE_URL_FIELD = "database.url";
+    private static final String DATABASE_POOL_SIZE_FIELD = "database.pool.size";
     private static final String POOL_SIZE;
 
     static {
@@ -25,8 +25,8 @@ public class ConnectionCreator {
         } catch (ClassNotFoundException | IOException e) {
             //logger.log(Level.ERROR, "Couldn't load properties: " + e);
         }
-        DATABASE_URL = (String) properties.getProperty(DATABASE_URL_FIELD);
-        POOL_SIZE = (String) properties.getProperty(DATABASE_POOL_SIZE_FIELD);
+        DATABASE_URL = properties.getProperty(DATABASE_URL_FIELD);
+        POOL_SIZE = properties.getProperty(DATABASE_POOL_SIZE_FIELD);
     }
 
     private ConnectionCreator() {

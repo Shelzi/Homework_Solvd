@@ -16,7 +16,6 @@ public class ConnectionPool {
     private static final int POOL_SIZE = Integer.parseInt(ConnectionCreator.getPoolSize());
     private static final int MAX_CONNECTION_ERROR_NUMBER = 4;
 
-
     public static ConnectionPool getInstance() {
         if (instance == null)
             instance = new ConnectionPool();

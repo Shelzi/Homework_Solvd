@@ -3,7 +3,14 @@ package com.shelzi.solvdlaba.hm2_oop.daohw.model.dao.impl;
 import com.shelzi.solvdlaba.hm2_oop.daohw.exception.ConnectionPoolException;
 import com.shelzi.solvdlaba.hm2_oop.daohw.exception.DaoException;
 import com.shelzi.solvdlaba.hm2_oop.daohw.model.dao.BookingDao;
-import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.*;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.Booking;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.Customer;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.Hotel;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.Payment;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.TransportType;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.Transportation;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.User;
+import com.shelzi.solvdlaba.hm2_oop.daohw.model.entity.UserRole;
 import com.shelzi.solvdlaba.hm2_oop.daohw.model.pool.ConnectionPool;
 import com.shelzi.solvdlaba.hm2_oop.daohw.constants.SqlQuery;
 
@@ -35,20 +42,15 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public Optional<Booking> findBookingById(int id) /*throws DaoException*/ {
-        Optional<Booking> optionalBooking = Optional.empty();
-        return Optional.empty();
-/*        try (Connection connection = pool.takeConnection();
+    public Optional<Booking> findBookingById(int id) throws DaoException {
+        try (Connection connection = pool.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.SQL_FIND_BOOKING_BY_ID)) {
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                optionalBooking.add(createBookingFromResultSet(resultSet));
-            }
-
-            return (resultSet.next() ? Optional.of(resultSet.getInt(1)) : Optional.empty());
+            return (resultSet.next() ? Optional.of(createBookingFromResultSet(resultSet)) : Optional.empty());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(e);
-        }*/
+        }
     }
 
     @Override
@@ -67,26 +69,38 @@ public class BookingDaoImpl implements BookingDao {
 
     }
 
-    public Optional<Integer> findTownIdByName(String name) throws DaoException {
-/*        try (Connection connection = pool.takeConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SQL_FIND_TOWN_ID_BY_NAME)) {
-            statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            return (resultSet.next() ? Optional.of(resultSet.getInt(1)) : Optional.empty());
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException(e);
-        }*/
-        return Optional.empty();
-    }
-
     private Booking createBookingFromResultSet(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("booking.id");
         String description = resultSet.getString("booking.description");
         String title = resultSet.getString("booking.title");
         Hotel hotel = createHotelFromResultSet(resultSet);
-        Transportation transportation = createTransportationFromResultSet(resultSet); //TODO
-        Payment payment = createPaymentFromResultSet(resultSet); //TODO
-        return new Booking(id, description, title, hotel, transportation, payment);
+        Transportation transportation = createTransportationFromResultSet(resultSet);
+        Payment payment = createPaymentFromResultSet(resultSet);
+        Customer customer = createCustomerFromResultSet(resultSet);
+        return new Booking(id, description, title, customer, hotel, transportation, payment);
+    }
+
+    private Customer createCustomerFromResultSet(ResultSet resultSet) throws SQLException {
+        return Customer.builder()
+                .id(resultSet.getInt("customer.id"))
+                .name(resultSet.getString("customer.full_name"))
+                .email(resultSet.getString("customer.email"))
+                .address(resultSet.getString("customer.address"))
+                .username(resultSet.getString("customer.username"))
+                .password(resultSet.getString("customer.password"))
+                .serviceWorker(createServiceWorkerFromResultSet(resultSet))
+                .build();
+    }
+
+    private User createServiceWorkerFromResultSet(ResultSet resultSet) throws SQLException {
+        return User.builder()
+                .id(resultSet.getInt("user.id"))
+                .name(resultSet.getString("user.full_name"))
+                .email(resultSet.getString("user.email"))
+                .password(resultSet.getString("user.password"))
+                .isBanned(resultSet.getBoolean("user.is_banned"))
+                .role(UserRole.valueOfRoleId(resultSet.getInt("user.user_role_id_fk")).get())
+                .build();
     }
 
     private Hotel createHotelFromResultSet(ResultSet resultSet) throws SQLException {

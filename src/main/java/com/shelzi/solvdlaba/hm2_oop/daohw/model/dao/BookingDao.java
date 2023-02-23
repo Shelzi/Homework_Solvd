@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookingDao {
-    Optional<Booking> findBookingById(int id);
+    Optional<Booking> findBookingById(int id) throws DaoException;
 
     List<Booking> getAllBookings() throws DaoException;
 }

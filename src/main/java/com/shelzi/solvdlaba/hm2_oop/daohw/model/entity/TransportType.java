@@ -8,7 +8,7 @@ public enum TransportType {
     LIMOUSINE(3);
     private final int id;
 
-    private TransportType(int id) {
+    TransportType(int id) {
         this.id = id;
     }
 
