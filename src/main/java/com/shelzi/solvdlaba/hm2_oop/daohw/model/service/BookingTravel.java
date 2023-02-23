@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ServiceTravel {
     List<Booking> getAllBookings() throws ServiceException;
+    Booking findBookingById(int id) throws ServiceException;
 }

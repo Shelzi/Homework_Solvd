@@ -9,14 +9,13 @@ import com.shelzi.solvdlaba.hm2_oop.daohw.model.pool.ConnectionPool;
 import com.shelzi.solvdlaba.hm2_oop.daohw.model.service.ServiceTravel;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ServiceTravelImpl implements ServiceTravel {
-
     private static final BookingDao bookingDao = BookingDaoImpl.getInstance();
     private static final Lock locker = new ReentrantLock();
-    private static final ConnectionPool pool = ConnectionPool.getInstance();
     private static ServiceTravel instance;
 
     public static ServiceTravel getInstance() {
@@ -38,4 +37,15 @@ public class ServiceTravelImpl implements ServiceTravel {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Booking findBookingById(int id) throws ServiceException {
+        try {
+            return bookingDao.findBookingById(id).orElseThrow();
+        } catch (NoSuchElementException | DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+
 }
